@@ -13,3 +13,5 @@ let add = fn(x, y) {
 return add(5,5);
 
 ```
+
+reminder for myself>> you stopped at prefix-operators
