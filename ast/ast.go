@@ -5,6 +5,25 @@ import (
 	"monkey/token"
 )
 
+type PrefixExpression struct {
+    Token    token.Token // The prefix token, e.g. !
+    Operator string
+    Right    Expression
+}
+
+
+func (pe *PrefixExpression) expressionNode()      {}
+func (pe *PrefixExpression) TokenLiteral() string { return pe.Token.Literal }
+func (pe *PrefixExpression) String() string {
+    var out bytes.Buffer
+
+    out.WriteString("(")
+    out.WriteString(pe.Operator)
+    out.WriteString(pe.Right.String())
+    out.WriteString(")")
+
+    return out.String()
+}
 type LetStatement struct {
 	Token token.Token // the token.LET token
 	Name  *Identifier
@@ -122,3 +141,24 @@ func (es *ExpressionStatement) String() string {
 }
 
 func (i *Identifier) String() string { return i.Value }
+
+type InfixExpression struct {
+    Token    token.Token // The operator token, e.g. +
+    Left     Expression
+    Operator string
+    Right    Expression
+}
+
+func (oe *InfixExpression) expressionNode()      {}
+func (oe *InfixExpression) TokenLiteral() string { return oe.Token.Literal }
+func (oe *InfixExpression) String() string {
+    var out bytes.Buffer
+
+    out.WriteString("(")
+    out.WriteString(oe.Left.String())
+    out.WriteString(" " + oe.Operator + " ")
+    out.WriteString(oe.Right.String())
+    out.WriteString(")")
+
+    return out.String()
+}
